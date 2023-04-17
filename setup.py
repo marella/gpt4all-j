@@ -7,13 +7,13 @@ name = 'gpt4all-j'
 
 setup(
     name=name,
-    version='0.1.0',
+    version='0.1.1',
     description='Python bindings for the C++ port of GPT4All-J model.',
     long_description=long_description,
     long_description_content_type='text/markdown',
     license='MIT',
     packages=find_packages(),
-    package_data={'gpt4allj': ['**/*.so', '**/*.dll']},
+    package_data={'gpt4allj': ['**/*.so', '**/*.dll', '**/*.dylib']},
     install_requires=[],
     zip_safe=False,
     classifiers=[

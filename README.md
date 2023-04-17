@@ -34,9 +34,9 @@ model.generate(prompt,
                temp=0.9)
 ```
 
-### macOS
+### C++ Library
 
-macOS isn't supported out of the box yet but you can use it with Docker or try building the C++ library from source [here][gptj.cpp]. Once you have built the shared libraries, you can use them as:
+To build the C++ library from source, please see [gptj.cpp][gptj.cpp]. Once you have built the shared libraries, you can use them as:
 
 ```py
 from gpt4allj import Model, load_library
