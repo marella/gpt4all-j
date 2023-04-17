@@ -30,6 +30,8 @@ def find_library(name):
         name = f'lib{name}.so'
     elif sys.platform.startswith('win32'):
         name = f'{name}.dll'
+    elif sys.platform.startswith('darwin'):
+        name = f'lib{name}.dylib'
     else:
         raise OSError('The current platform is not supported. ' +
                       'Please try building the C++ library from source.')
