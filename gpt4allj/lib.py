@@ -35,7 +35,7 @@ def find_library(name):
     else:
         raise OSError('The current platform is not supported. ' +
                       'Please try building the C++ library from source.')
-    return Path(__file__).parent.resolve() / 'lib' / name
+    return str(Path(__file__).parent.resolve() / 'lib' / name)
 
 
 def load_library(gptj=None, ggml=None):
