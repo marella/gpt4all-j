@@ -19,9 +19,9 @@ class gptj_params(Structure):
         ('n_threads', c_int32),
         ('n_predict', c_int32),
         ('top_k', c_int32),
-        ('n_batch', c_int32),
         ('top_p', c_float),
         ('temp', c_float),
+        ('n_batch', c_int32),
     ]
 
 

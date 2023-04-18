@@ -17,19 +17,19 @@ class Model:
                  seed=-1,
                  n_threads=-1,
                  n_predict=200,
-                 n_batch=1,
                  top_k=40,
                  top_p=0.9,
                  temp=0.9,
+                 n_batch=8,
                  response_buffer_size=10000):
         prompt = prompt.encode()
         params = gptj_params(seed=seed,
                              n_threads=n_threads,
                              n_predict=n_predict,
-                             n_batch=n_batch,
                              top_k=top_k,
                              top_p=top_p,
-                             temp=temp)
+                             temp=temp,
+                             n_batch=n_batch)
         response = create_string_buffer(response_buffer_size)
         status = self._lib.gptj_generate(self._ctx, prompt, params, response)
         if not status:

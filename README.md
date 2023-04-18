@@ -31,7 +31,8 @@ model.generate(prompt,
                n_predict=200,
                top_k=40,
                top_p=0.9,
-               temp=0.9)
+               temp=0.9,
+               n_batch=8)
 ```
 
 ### C++ Library
