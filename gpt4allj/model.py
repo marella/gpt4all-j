@@ -17,6 +17,7 @@ class Model:
                  seed=-1,
                  n_threads=-1,
                  n_predict=200,
+                 n_batch=1,
                  top_k=40,
                  top_p=0.9,
                  temp=0.9,
@@ -25,6 +26,7 @@ class Model:
         params = gptj_params(seed=seed,
                              n_threads=n_threads,
                              n_predict=n_predict,
+                             n_batch=n_batch,
                              top_k=top_k,
                              top_p=top_p,
                              temp=temp)
