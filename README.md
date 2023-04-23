@@ -1,4 +1,4 @@
-# [GPT4All-J](https://github.com/marella/gpt4all-j)
+# [GPT4All-J](https://github.com/marella/gpt4all-j) [![tests](https://github.com/marella/gpt4all-j/actions/workflows/tests.yml/badge.svg)](https://github.com/marella/gpt4all-j/actions/workflows/tests.yml)
 
 Python bindings for the [C++ port][gptj.cpp] of GPT4All-J model.
 
@@ -22,6 +22,14 @@ print(model.generate('AI is going to'))
 
 [Run in Google Colab](https://colab.research.google.com/drive/1bd38-i1Qlx6_MvJyCTJOy7t8eHSNnqAx)
 
+If you are getting `Illegal instruction` error, try using `instructions='avx'`:
+
+```py
+model = Model('/path/to/ggml-gpt4all-j.bin', instructions='avx')
+```
+
+If it is running slow, try building the C++ library from source. [Learn more](https://github.com/marella/gpt4all-j#c-library)
+
 ### Parameters
 
 ```py
@@ -32,7 +40,19 @@ model.generate(prompt,
                top_k=40,
                top_p=0.9,
                temp=0.9,
-               n_batch=8)
+               n_batch=8,
+               callback=None)
+```
+
+### `callback`
+
+If a callback function is passed to `model.generate()`, it will be called once per each generated token. To stop generating more tokens, return `False` inside the callback function.
+
+```py
+def callback(token):
+    print(token)
+
+model.generate('AI is going to', callback=callback)
 ```
 
 ### C++ Library
@@ -50,5 +70,4 @@ model = Model('/path/to/ggml-gpt4all-j.bin', lib=lib)
 ## License
 
 [MIT](https://github.com/marella/gpt4all-j/blob/main/LICENSE)
-
 [gptj.cpp]: https://github.com/marella/gptj.cpp
