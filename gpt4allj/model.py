@@ -1,6 +1,6 @@
 from ctypes import create_string_buffer
 
-from .lib import load_library, gptj_params
+from .lib import load_library, gptj_params, gptj_generate_callback_t
 
 
 class Model:
@@ -21,7 +21,7 @@ class Model:
                  top_p=0.9,
                  temp=0.9,
                  n_batch=8,
-                 response_buffer_size=10000):
+                 callback=None):
         prompt = prompt.encode()
         params = gptj_params(seed=seed,
                              n_threads=n_threads,
@@ -30,11 +30,25 @@ class Model:
                              top_p=top_p,
                              temp=temp,
                              n_batch=n_batch)
-        response = create_string_buffer(response_buffer_size)
-        status = self._lib.gptj_generate(self._ctx, prompt, params, response)
+        response = []
+
+        @gptj_generate_callback_t
+        def cb(token):
+            token = token.decode()
+            if callback:
+                return callback(token) is not False
+            else:
+                response.append(token)
+                return True
+
+        status = self._lib.gptj_generate(self._ctx, prompt, params, cb)
         if not status:
             raise RuntimeError(f'Failed to generate response for "{prompt}"')
-        return response.value.decode()
+        return ''.join(response) if callback is None else None
+
+    def num_tokens(self, prompt):
+        prompt = prompt.encode()
+        return self._lib.gptj_num_tokens(self._ctx, prompt)
 
     def __del__(self):
         if self._ctx is not None:

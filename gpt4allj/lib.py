@@ -2,15 +2,18 @@ import sys
 from pathlib import Path
 from ctypes import (
     CDLL,
+    c_int,
     c_int32,
     c_float,
     c_char_p,
     c_void_p,
     c_bool,
     Structure,
+    CFUNCTYPE,
 )
 
 gptj_model_context_p = c_void_p
+gptj_generate_callback_t = CFUNCTYPE(c_bool, c_char_p)
 
 
 class gptj_params(Structure):
@@ -55,8 +58,11 @@ def load_library(gptj=None, ggml=None, instructions='avx2'):
     lib.gptj_free_model.restype = None
 
     lib.gptj_generate.argtypes = [
-        gptj_model_context_p, c_char_p, gptj_params, c_char_p
+        gptj_model_context_p, c_char_p, gptj_params, gptj_generate_callback_t
     ]
     lib.gptj_generate.restype = c_bool
+
+    lib.gptj_num_tokens.argtypes = [gptj_model_context_p, c_char_p]
+    lib.gptj_num_tokens.restype = c_int
 
     return lib
