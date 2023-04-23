@@ -70,4 +70,5 @@ model = Model('/path/to/ggml-gpt4all-j.bin', lib=lib)
 ## License
 
 [MIT](https://github.com/marella/gpt4all-j/blob/main/LICENSE)
+
 [gptj.cpp]: https://github.com/marella/gptj.cpp
