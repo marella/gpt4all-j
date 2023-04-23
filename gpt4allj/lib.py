@@ -25,7 +25,7 @@ class gptj_params(Structure):
     ]
 
 
-def find_library(name):
+def find_library(name, instructions):
     if sys.platform.startswith('linux'):
         name = f'lib{name}.so'
     elif sys.platform.startswith('win32'):
@@ -33,16 +33,17 @@ def find_library(name):
     elif sys.platform.startswith('darwin'):
         name = f'lib{name}.dylib'
     else:
+        name = ''
+    path = Path(__file__).parent.resolve() / 'lib' / instructions / name
+    if not path.is_file():
         raise OSError('The current platform is not supported. ' +
                       'Please try building the C++ library from source.')
-    return str(Path(__file__).parent.resolve() / 'lib' / name)
+    return str(path)
 
 
-def load_library(gptj=None, ggml=None):
-    if gptj is None:
-        gptj = find_library('gptj')
-    if ggml is None:
-        ggml = find_library('ggml')
+def load_library(gptj=None, ggml=None, instructions='avx2'):
+    gptj = gptj or find_library('gptj', instructions)
+    ggml = ggml or find_library('ggml', instructions)
 
     CDLL(ggml)
     lib = CDLL(gptj)

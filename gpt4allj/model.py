@@ -5,9 +5,9 @@ from .lib import load_library, gptj_params
 
 class Model:
 
-    def __init__(self, model, lib=None):
+    def __init__(self, model, lib=None, instructions='avx2'):
         self._ctx = None
-        self._lib = load_library() if lib is None else lib
+        self._lib = lib or load_library(instructions=instructions)
         self._ctx = self._lib.gptj_load_model(model.encode())
         if self._ctx is None:
             raise RuntimeError(f'Failed to load model from "{model}"')

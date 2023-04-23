@@ -1,0 +1,3 @@
+[submodule "gptj.cpp"]
+	path = gptj.cpp
+	url = https://github.com/marella/gptj.cpp
