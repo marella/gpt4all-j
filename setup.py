@@ -18,6 +18,11 @@ setup(
     packages=['gpt4allj'],
     package_data={'gpt4allj': ['lib/*/*.so', 'lib/*/*.dll', 'lib/*/*.dylib']},
     install_requires=[],
+    extras_require={
+        'tests': [
+            'pytest',
+        ],
+    },
     zip_safe=False,
     classifiers=[
         'Development Status :: 1 - Planning',
