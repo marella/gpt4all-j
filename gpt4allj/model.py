@@ -5,7 +5,7 @@ from .lib import load_library, gptj_params, gptj_generate_callback_t
 
 class Model:
 
-    def __init__(self, model, lib=None, instructions='avx2'):
+    def __init__(self, model, lib=None, instructions=None):
         self._ctx = None
         self._lib = lib or load_library(instructions=instructions)
         self._ctx = self._lib.gptj_load_model(model.encode())

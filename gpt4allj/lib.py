@@ -1,3 +1,4 @@
+import platform
 import sys
 from pathlib import Path
 from ctypes import (
@@ -28,7 +29,11 @@ class gptj_params(Structure):
     ]
 
 
-def find_library(name, instructions):
+def find_library(name, instructions=None):
+    if not instructions:
+        # Apple silicon doesn't support AVX/AVX2.
+        instructions = 'basic' if platform.processor() == 'arm' else 'avx2'
+
     if sys.platform.startswith('linux'):
         name = f'lib{name}.so'
     elif sys.platform.startswith('win32'):
@@ -37,6 +42,7 @@ def find_library(name, instructions):
         name = f'lib{name}.dylib'
     else:
         name = ''
+
     path = Path(__file__).parent.resolve() / 'lib' / instructions / name
     if not path.is_file():
         raise OSError('The current platform is not supported. ' +
@@ -44,7 +50,7 @@ def find_library(name, instructions):
     return str(path)
 
 
-def load_library(gptj=None, ggml=None, instructions='avx2'):
+def load_library(gptj=None, ggml=None, instructions=None):
     gptj = gptj or find_library('gptj', instructions)
     ggml = ggml or find_library('ggml', instructions)
 
