@@ -15,14 +15,14 @@ jobs:
           - macos-latest
           - windows-latest
         instructions:
-          - avx
           - avx2
+          - avx
+          - basic
         python:
           - '3.8'
           - '3.9'
           - '3.10'
           - '3.11'
-          - '3.x'
         exclude:
           - os: macos-latest
             instructions: avx2

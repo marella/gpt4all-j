@@ -22,7 +22,7 @@ print(model.generate('AI is going to'))
 
 [Run in Google Colab](https://colab.research.google.com/drive/1bd38-i1Qlx6_MvJyCTJOy7t8eHSNnqAx)
 
-If you are getting `Illegal instruction` error, try using `instructions='avx'`:
+If you are getting `illegal instruction` error, try using `instructions='avx'` or `instructions='basic'`:
 
 ```py
 model = Model('/path/to/ggml-gpt4all-j.bin', instructions='avx')

@@ -3,7 +3,10 @@ import pytest
 
 def pytest_addoption(parser):
     parser.addoption("--model", action="store", default="ggml-gpt4all-j.bin")
-    parser.addoption("--instructions", action="store", choices=("avx", "avx2"), required=True)
+    parser.addoption("--instructions",
+                     action="store",
+                     choices=("avx2", "avx", "basic"),
+                     required=True)
 
 
 @pytest.fixture
