@@ -1,5 +1,4 @@
 import platform
-import sys
 from pathlib import Path
 from ctypes import (
     CDLL,
@@ -30,15 +29,19 @@ class gptj_params(Structure):
 
 
 def find_library(name, instructions=None):
+    system = platform.system()
     if not instructions:
-        # Apple silicon doesn't support AVX/AVX2.
-        instructions = 'basic' if platform.processor() == 'arm' else 'avx2'
+        if platform.processor() == 'arm':
+            # Apple silicon doesn't support AVX/AVX2.
+            instructions = 'basic' if system == 'Darwin' else ''
+        else:
+            instructions = 'avx2'
 
-    if sys.platform.startswith('linux'):
+    if system == 'Linux':
         name = f'lib{name}.so'
-    elif sys.platform.startswith('win32'):
+    elif system == 'Windows':
         name = f'{name}.dll'
-    elif sys.platform.startswith('darwin'):
+    elif system == 'Darwin':
         name = f'lib{name}.dylib'
     else:
         name = ''
