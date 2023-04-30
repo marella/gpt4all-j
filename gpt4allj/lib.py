@@ -24,6 +24,8 @@ class gptj_params(Structure):
         ('top_k', c_int32),
         ('top_p', c_float),
         ('temp', c_float),
+        ('repeat_penalty', c_float),
+        ('repeat_last_n', c_int32),
         ('n_batch', c_int32),
     ]
 

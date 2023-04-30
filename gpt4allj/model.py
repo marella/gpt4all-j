@@ -20,6 +20,8 @@ class Model:
                  top_k=40,
                  top_p=0.9,
                  temp=0.9,
+                 repeat_penalty=1.0,
+                 repeat_last_n=64,
                  n_batch=8,
                  callback=None):
         prompt = prompt.encode()
@@ -29,6 +31,8 @@ class Model:
                              top_k=top_k,
                              top_p=top_p,
                              temp=temp,
+                             repeat_penalty=repeat_penalty,
+                             repeat_last_n=repeat_last_n,
                              n_batch=n_batch)
         response = []
 

@@ -1,4 +1,4 @@
-# [GPT4All-J](https://github.com/marella/gpt4all-j) [![tests](https://github.com/marella/gpt4all-j/actions/workflows/tests.yml/badge.svg)](https://github.com/marella/gpt4all-j/actions/workflows/tests.yml)
+# [GPT4All-J](https://github.com/marella/gpt4all-j) [![PyPI](https://img.shields.io/pypi/v/gpt4all-j)](https://pypi.org/project/gpt4all-j/) [![tests](https://github.com/marella/gpt4all-j/actions/workflows/tests.yml/badge.svg)](https://github.com/marella/gpt4all-j/actions/workflows/tests.yml)
 
 Python bindings for the [C++ port][gptj.cpp] of GPT4All-J model.
 
@@ -41,6 +41,8 @@ model.generate(prompt,
                top_p=0.9,
                temp=0.9,
                n_batch=8,
+               repeat_penalty=1.0,
+               repeat_last_n=64,
                callback=None)
 ```
 
