@@ -1,5 +1,3 @@
-from ctypes import create_string_buffer
-
 from .lib import load_library, gptj_params, gptj_generate_callback_t
 
 
@@ -34,21 +32,19 @@ class Model:
                              repeat_penalty=repeat_penalty,
                              repeat_last_n=repeat_last_n,
                              n_batch=n_batch)
+        callback = callback or (lambda token: True)
         response = []
 
         @gptj_generate_callback_t
         def cb(token):
             token = token.decode()
-            if callback:
-                return callback(token) is not False
-            else:
-                response.append(token)
-                return True
+            response.append(token)
+            return callback(token) is not False
 
         status = self._lib.gptj_generate(self._ctx, prompt, params, cb)
         if not status:
             raise RuntimeError(f'Failed to generate response for "{prompt}"')
-        return ''.join(response) if callback is None else None
+        return ''.join(response)
 
     def num_tokens(self, prompt):
         prompt = prompt.encode()

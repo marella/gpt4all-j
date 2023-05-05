@@ -8,7 +8,7 @@ Python bindings for the [C++ port][gptj.cpp] of GPT4All-J model.
 pip install gpt4all-j
 ```
 
-Download the model from [here](https://gpt4all.io/models/ggml-gpt4all-j.bin).
+Download the model from [here](https://gpt4all.io/models/ggml-gpt4all-j-v1.3-groovy.bin).
 
 ## Usage
 
@@ -40,15 +40,15 @@ model.generate(prompt,
                top_k=40,
                top_p=0.9,
                temp=0.9,
-               n_batch=8,
                repeat_penalty=1.0,
                repeat_last_n=64,
+               n_batch=8,
                callback=None)
 ```
 
-### `callback`
+#### `callback`
 
-If a callback function is passed to `model.generate()`, it will be called once per each generated token. To stop generating more tokens, return `False` inside the callback function.
+If a callback function is passed, it will be called once per each generated token. To stop generating more tokens, return `False` inside the callback function.
 
 ```py
 def callback(token):
@@ -57,7 +57,56 @@ def callback(token):
 model.generate('AI is going to', callback=callback)
 ```
 
-### C++ Library
+## LangChain
+
+[LangChain](https://python.langchain.com/) is a framework for developing applications powered by language models. A LangChain LLM object for the GPT4All-J model can be created using:
+
+```py
+from gpt4allj.langchain import GPT4AllJ
+
+llm = GPT4AllJ(model='/path/to/ggml-gpt4all-j.bin')
+
+print(llm('AI is going to'))
+```
+
+If you are getting `illegal instruction` error, try using `instructions='avx'` or `instructions='basic'`:
+
+```py
+llm = GPT4AllJ(model='/path/to/ggml-gpt4all-j.bin', instructions='avx')
+```
+
+It can be used with other LangChain modules:
+
+```py
+from langchain import PromptTemplate, LLMChain
+
+template = """Question: {question}
+
+Answer:"""
+
+prompt = PromptTemplate(template=template, input_variables=['question'])
+
+llm_chain = LLMChain(prompt=prompt, llm=llm)
+
+print(llm_chain.run('What is AI?'))
+```
+
+### Parameters
+
+```py
+llm = GPT4AllJ(model='/path/to/ggml-gpt4all-j.bin',
+               seed=-1,
+               n_threads=-1,
+               n_predict=200,
+               top_k=40,
+               top_p=0.9,
+               temp=0.9,
+               repeat_penalty=1.0,
+               repeat_last_n=64,
+               n_batch=8)
+```
+
+## C++ Library
 
 To build the C++ library from source, please see [gptj.cpp][gptj.cpp]. Once you have built the shared libraries, you can use them as:
 
