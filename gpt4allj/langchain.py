@@ -30,6 +30,7 @@ class GPT4AllJ(LLM):
     repeat_penalty: float = Field(1.0, alias='repeat_penalty')
     repeat_last_n: int = Field(64, alias='repeat_last_n')
     n_batch: int = Field(8, alias='n_batch')
+    reset: bool = Field(True, alias='reset')
 
     @property
     def _default_params(self) -> Dict[str, Any]:
@@ -43,6 +44,7 @@ class GPT4AllJ(LLM):
             'repeat_penalty': self.repeat_penalty,
             'repeat_last_n': self.repeat_last_n,
             'n_batch': self.n_batch,
+            'reset': self.reset,
         }
 
     @property

@@ -69,7 +69,8 @@ def load_library(gptj=None, ggml=None, instructions=None):
     lib.gptj_free_model.restype = None
 
     lib.gptj_generate.argtypes = [
-        gptj_model_context_p, c_char_p, gptj_params, gptj_generate_callback_t
+        gptj_model_context_p, c_char_p, gptj_params, c_bool,
+        gptj_generate_callback_t
     ]
     lib.gptj_generate.restype = c_bool
 

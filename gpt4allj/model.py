@@ -21,6 +21,7 @@ class Model:
                  repeat_penalty=1.0,
                  repeat_last_n=64,
                  n_batch=8,
+                 reset=True,
                  callback=None):
         prompt = prompt.encode()
         params = gptj_params(seed=seed,
@@ -41,7 +42,7 @@ class Model:
             response.append(token)
             return callback(token) is not False
 
-        status = self._lib.gptj_generate(self._ctx, prompt, params, cb)
+        status = self._lib.gptj_generate(self._ctx, prompt, params, reset, cb)
         if not status:
             raise RuntimeError(f'Failed to generate response for "{prompt}"')
         return ''.join(response)

@@ -43,7 +43,17 @@ model.generate(prompt,
                repeat_penalty=1.0,
                repeat_last_n=64,
                n_batch=8,
+               reset=True,
                callback=None)
+```
+
+#### `reset`
+
+If `True`, context will be reset. To keep the previous context, use `reset=False`.
+
+```py
+model.generate('Write code to sort numbers in Python.')
+model.generate('Rewrite the code in JavaScript.', reset=False)
 ```
 
 #### `callback`
@@ -103,7 +113,8 @@ llm = GPT4AllJ(model='/path/to/ggml-gpt4all-j.bin',
                temp=0.9,
                repeat_penalty=1.0,
                repeat_last_n=64,
-               n_batch=8)
+               n_batch=8,
+               reset=True)
 ```
 
 ## C++ Library
