@@ -2,6 +2,8 @@
 
 Python bindings for the [C++ port][gptj.cpp] of GPT4All-J model.
 
+> Please migrate to [`ctransformers`](https://github.com/marella/ctransformers) library which supports more models and has more features.
+
 ## Installation
 
 ```sh
