@@ -7,7 +7,7 @@ name = 'gpt4all-j'
 
 setup(
     name=name,
-    version='0.2.5',
+    version='0.2.6',
     description='Python bindings for the C++ port of GPT4All-J model.',
     long_description=long_description,
     long_description_content_type='text/markdown',
